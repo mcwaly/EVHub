@@ -1,0 +1,942 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About Us — EVHub</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy:        #1a3a5c;
+    --maroon:      #7b1f2e;
+    --teal:        #5b8fa8;
+    --amber:       #c97d2a;
+    --green:       #3daa4e;
+    --light-green: #5ecf72;
+    --cream:       #f5f0ea;
+    --dark:        #0d1f30;
+    --mid:         #152840;
+    --card:        rgba(255,255,255,.03);
+    --border:      rgba(91,143,168,.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 5%;
+    background: rgba(13,31,48,.9);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo img { height: 52px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--cream); text-decoration: none;
+    font-size: .9rem; font-weight: 500; letter-spacing: .04em;
+    transition: color .25s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--light-green); }
+  .nav-cta {
+    background: var(--green); color: #fff; border: none;
+    padding: .6rem 1.5rem; border-radius: 50px;
+    font-family: 'Outfit', sans-serif; font-weight: 600;
+    font-size: .9rem; cursor: pointer;
+    transition: background .25s, transform .2s;
+  }
+  .nav-cta:hover { background: var(--light-green); transform: translateY(-1px); }
+
+  /* ─── PAGE HERO ─── */
+  .page-hero {
+    min-height: 80vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 9rem 5% 6rem;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 70% at 50% 30%, rgba(91,143,168,.15) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 15% 70%, rgba(123,31,46,.2) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 50% at 85% 60%, rgba(201,125,42,.12) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  /* Animated grid lines */
+  .page-hero::after {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(91,143,168,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(91,143,168,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 80%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(61,170,78,.1); border: 1px solid rgba(61,170,78,.3);
+    border-radius: 50px; padding: .35rem 1.1rem;
+    font-size: .75rem; font-weight: 700; letter-spacing: .14em;
+    color: var(--light-green); text-transform: uppercase;
+    margin-bottom: 1.8rem; position: relative; z-index: 1;
+    animation: fadeUp .7s ease both;
+  }
+
+  .page-hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 9vw, 8rem);
+    line-height: .9; letter-spacing: .02em;
+    position: relative; z-index: 1;
+    animation: fadeUp .7s .1s ease both;
+  }
+  .page-hero h1 .line1 { display: block; color: var(--cream); }
+  .page-hero h1 .line2 {
+    display: block;
+    background: linear-gradient(100deg, var(--teal) 0%, var(--amber) 50%, var(--light-green) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .hero-desc {
+    max-width: 620px; margin: 2rem auto 0;
+    font-size: 1.1rem; font-weight: 300; line-height: 1.8;
+    color: rgba(245,240,234,.65);
+    position: relative; z-index: 1;
+    animation: fadeUp .7s .25s ease both;
+  }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: .5rem;
+    font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(245,240,234,.3); z-index: 1;
+    animation: fadeUp .7s .5s ease both;
+  }
+  .scroll-hint-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, rgba(91,143,168,.5), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine { 0%,100%{opacity:.4; transform:scaleY(1)} 50%{opacity:1; transform:scaleY(1.2)} }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 7rem 5%; }
+  .section-label {
+    display: inline-block;
+    font-size: .72rem; font-weight: 800; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--light-green); margin-bottom: .9rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    line-height: 1; letter-spacing: .02em;
+  }
+  .section-sub {
+    font-size: 1rem; color: rgba(245,240,234,.55);
+    line-height: 1.75; max-width: 540px; margin-top: .8rem;
+  }
+
+  /* ─── STORY SECTION ─── */
+  .story {
+    background: var(--mid);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+  .story-text .story-body {
+    margin-top: 1.8rem;
+    display: flex; flex-direction: column; gap: 1.1rem;
+  }
+  .story-text p {
+    font-size: 1rem; line-height: 1.8;
+    color: rgba(245,240,234,.65);
+  }
+  .story-text p strong { color: var(--cream); font-weight: 600; }
+
+  .story-visual { position: relative; }
+  .origin-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px; overflow: hidden;
+    position: relative;
+  }
+  .origin-card-header {
+    background: linear-gradient(135deg, var(--navy), rgba(123,31,46,.5));
+    padding: 2rem 2rem 5rem;
+    position: relative; overflow: hidden;
+  }
+  .origin-card-header::after {
+    content: '';
+    position: absolute; bottom: -40px; left: -20px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(91,143,168,.2), transparent 70%);
+  }
+  .origin-country-flags {
+    display: flex; gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .flag-pill {
+    display: flex; align-items: center; gap: .5rem;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 50px; padding: .4rem 1rem;
+    font-size: .85rem; font-weight: 600;
+  }
+  .origin-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.6rem; letter-spacing: .03em;
+    color: var(--cream); line-height: 1;
+  }
+  .origin-title span { color: var(--light-green); }
+  .origin-card-body { padding: 2rem; }
+  .origin-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .o-stat {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(91,143,168,.12);
+    border-radius: 14px; padding: 1.2rem;
+  }
+  .o-stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem; color: var(--amber); line-height: 1;
+  }
+  .o-stat-key {
+    font-size: .72rem; color: rgba(245,240,234,.45);
+    text-transform: uppercase; letter-spacing: .08em; margin-top: .2rem;
+  }
+
+  /* Floating connector pill */
+  .float-pill {
+    position: absolute; top: -18px; right: 1.5rem;
+    background: linear-gradient(135deg, var(--green), #2a8840);
+    border-radius: 50px; padding: .55rem 1.2rem;
+    font-size: .8rem; font-weight: 700;
+    box-shadow: 0 8px 24px rgba(61,170,78,.4);
+    display: flex; align-items: center; gap: .4rem;
+    white-space: nowrap;
+    animation: floatPill 3s ease-in-out infinite alternate;
+  }
+  @keyframes floatPill { 0%{transform:translateY(0)} 100%{transform:translateY(-8px)} }
+
+  /* ─── MISSION / VALUES ─── */
+  .values { background: var(--dark); }
+  .values-intro { max-width: 700px; margin-bottom: 4rem; }
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .value-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px; padding: 2.2rem 1.8rem;
+    position: relative; overflow: hidden;
+    transition: transform .3s, border-color .3s, background .3s;
+  }
+  .value-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    border-radius: 22px 22px 0 0;
+  }
+  .value-card.c-teal::before   { background: var(--teal); }
+  .value-card.c-green::before  { background: var(--green); }
+  .value-card.c-amber::before  { background: var(--amber); }
+  .value-card.c-maroon::before { background: var(--maroon); }
+  .value-card.c-navy::before   { background: var(--navy); }
+  .value-card.c-lgreen::before { background: var(--light-green); }
+  .value-card:hover { transform: translateY(-7px); border-color: rgba(91,143,168,.35); background: rgba(91,143,168,.06); }
+  .value-icon {
+    font-size: 2.2rem; margin-bottom: 1.2rem; display: block;
+  }
+  .value-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .6rem; }
+  .value-card p  { font-size: .875rem; color: rgba(245,240,234,.5); line-height: 1.7; }
+
+  /* ─── TIMELINE ─── */
+  .timeline-section { background: var(--mid); }
+  .timeline-intro { max-width: 600px; margin-bottom: 4.5rem; }
+  .timeline {
+    position: relative;
+    padding-left: 3rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--teal), var(--amber), var(--light-green));
+    border-radius: 2px;
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 3.5rem;
+    padding-left: 1.5rem;
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .tl-item.visible { opacity: 1; transform: translateX(0); }
+  .tl-dot {
+    position: absolute; left: -3rem; top: .2rem;
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid var(--teal);
+    background: var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .3s, box-shadow .3s;
+  }
+  .tl-dot::after {
+    content: ''; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--teal);
+  }
+  .tl-item:hover .tl-dot { border-color: var(--light-green); box-shadow: 0 0 16px rgba(94,207,114,.4); }
+  .tl-item:hover .tl-dot::after { background: var(--light-green); }
+  .tl-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: .15em;
+    color: var(--amber); margin-bottom: .35rem;
+  }
+  .tl-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.6rem 1.8rem;
+    transition: border-color .3s;
+  }
+  .tl-item:hover .tl-card { border-color: rgba(91,143,168,.35); }
+  .tl-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; }
+  .tl-card p  { font-size: .875rem; color: rgba(245,240,234,.5); line-height: 1.65; }
+  .tl-tag {
+    display: inline-block; margin-top: .9rem;
+    background: rgba(61,170,78,.1); border: 1px solid rgba(61,170,78,.25);
+    color: var(--light-green); border-radius: 50px;
+    padding: .2rem .75rem; font-size: .7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .08em;
+  }
+  .tl-tag.amber { background: rgba(201,125,42,.1); border-color: rgba(201,125,42,.25); color: var(--amber); }
+  .tl-tag.teal  { background: rgba(91,143,168,.1); border-color: rgba(91,143,168,.25); color: var(--teal); }
+
+  /* ─── TEAM ─── */
+  .team { background: var(--dark); }
+  .team-intro { max-width: 600px; margin-bottom: 4rem; }
+  .team-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .team-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px; overflow: hidden;
+    transition: transform .3s, border-color .3s;
+  }
+  .team-card:hover { transform: translateY(-7px); border-color: rgba(91,143,168,.4); }
+  .team-avatar {
+    width: 100%; aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+    position: relative; overflow: hidden;
+  }
+  .team-avatar.bg1 { background: linear-gradient(135deg, rgba(26,58,92,.8), rgba(91,143,168,.3)); }
+  .team-avatar.bg2 { background: linear-gradient(135deg, rgba(123,31,46,.6), rgba(201,125,42,.3)); }
+  .team-avatar.bg3 { background: linear-gradient(135deg, rgba(61,170,78,.2), rgba(26,58,92,.6)); }
+  .team-avatar.bg4 { background: linear-gradient(135deg, rgba(201,125,42,.3), rgba(91,143,168,.3)); }
+  .team-avatar-initials {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: rgba(245,240,234,.6); letter-spacing: .05em;
+  }
+  .avatar-ring {
+    position: absolute; inset: 0;
+    border-radius: 0;
+    background: conic-gradient(from 0deg, transparent 70%, rgba(94,207,114,.15) 85%, transparent 100%);
+    animation: ringRotate 6s linear infinite;
+  }
+  @keyframes ringRotate { to { transform: rotate(360deg); } }
+  .team-info { padding: 1.4rem 1.4rem 1.6rem; }
+  .team-info h3 { font-size: 1rem; font-weight: 700; }
+  .team-info .role { font-size: .78rem; color: var(--teal); font-weight: 600; letter-spacing: .04em; margin-top: .2rem; }
+  .team-info .bio  { font-size: .8rem; color: rgba(245,240,234,.45); line-height: 1.6; margin-top: .7rem; }
+  .team-socials { display: flex; gap: .6rem; margin-top: 1rem; }
+  .t-social {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(91,143,168,.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .7rem; cursor: pointer;
+    transition: background .2s, border-color .2s;
+  }
+  .t-social:hover { background: rgba(91,143,168,.15); border-color: rgba(91,143,168,.4); }
+
+  /* ─── IMPACT NUMBERS ─── */
+  .impact { background: var(--mid); text-align: center; }
+  .impact-title-wrap { margin-bottom: 4rem; }
+  .impact-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .impact-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px; padding: 2.5rem 1.5rem;
+    position: relative; overflow: hidden;
+    transition: transform .3s, border-color .3s;
+  }
+  .impact-card:hover { transform: translateY(-6px); border-color: rgba(91,143,168,.4); }
+  .impact-card::after {
+    content: ''; position: absolute; bottom: -30px; right: -30px;
+    width: 120px; height: 120px; border-radius: 50%;
+    pointer-events: none; opacity: .06;
+  }
+  .impact-card.i1::after { background: var(--teal); }
+  .impact-card.i2::after { background: var(--green); }
+  .impact-card.i3::after { background: var(--amber); }
+  .impact-card.i4::after { background: var(--maroon); }
+  .impact-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .impact-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.8rem; line-height: 1;
+    letter-spacing: .02em;
+  }
+  .impact-card.i1 .impact-num { color: var(--teal); }
+  .impact-card.i2 .impact-num { color: var(--light-green); }
+  .impact-card.i3 .impact-num { color: var(--amber); }
+  .impact-card.i4 .impact-num { color: #d45a6e; }
+  .impact-label {
+    font-size: .82rem; color: rgba(245,240,234,.5);
+    text-transform: uppercase; letter-spacing: .08em; margin-top: .4rem;
+  }
+
+  /* ─── PARTNERS / BACKED BY ─── */
+  .partners { background: var(--dark); }
+  .partners-intro { max-width: 600px; margin-bottom: 3.5rem; }
+  .partners-logos {
+    display: flex; flex-wrap: wrap; gap: 1.2rem;
+  }
+  .partner-pill {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px; padding: 1rem 1.8rem;
+    display: flex; align-items: center; gap: .8rem;
+    font-weight: 600; font-size: .9rem;
+    transition: border-color .25s, background .25s;
+    cursor: default;
+  }
+  .partner-pill:hover { border-color: rgba(91,143,168,.4); background: rgba(91,143,168,.06); }
+  .partner-icon { font-size: 1.4rem; }
+
+  /* ─── JOIN US CTA ─── */
+  .join-cta {
+    background: linear-gradient(135deg, var(--navy) 0%, #0d1e30 50%, rgba(123,31,46,.35) 100%);
+    border-top: 1px solid rgba(91,143,168,.15);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .join-cta::before {
+    content: '';
+    position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,170,78,.08), transparent 65%);
+    pointer-events: none;
+  }
+  .join-cta-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+  .join-cta h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1; letter-spacing: .02em; margin-bottom: 1.2rem;
+  }
+  .join-cta h2 span { color: var(--light-green); }
+  .join-cta p { color: rgba(245,240,234,.55); font-size: 1.05rem; line-height: 1.75; margin-bottom: 2.5rem; }
+  .join-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* ─── FOOTER ─── */
+  footer { background: #080f17; padding: 4rem 5% 2.5rem; border-top: 1px solid rgba(91,143,168,.1); }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand img { height: 48px; margin-bottom: 1rem; }
+  .footer-brand p { font-size: .85rem; color: rgba(245,240,234,.38); line-height: 1.7; max-width: 240px; }
+  .footer-col h4 { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(245,240,234,.5); margin-bottom: 1rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: .6rem; }
+  .footer-col ul a { font-size: .875rem; color: rgba(245,240,234,.38); text-decoration: none; transition: color .2s; }
+  .footer-col ul a:hover { color: var(--light-green); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,.05); }
+  .footer-bottom p { font-size: .78rem; color: rgba(245,240,234,.28); }
+  .social-links { display: flex; gap: 1rem; }
+  .social-link { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid rgba(91,143,168,.15); display: flex; align-items: center; justify-content: center; font-size: .9rem; cursor: pointer; transition: background .25s, border-color .25s; }
+  .social-link:hover { background: rgba(91,143,168,.14); border-color: rgba(91,143,168,.4); }
+
+  /* ─── SHARED UTILS ─── */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--green), #2d8a3e);
+    color: #fff; border: none; padding: .85rem 2rem;
+    border-radius: 50px; font-family: 'Outfit', sans-serif;
+    font-weight: 600; font-size: 1rem; cursor: pointer;
+    box-shadow: 0 6px 28px rgba(61,170,78,.35);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(61,170,78,.45); }
+  .btn-outline {
+    background: transparent; color: var(--cream);
+    border: 1.5px solid rgba(245,240,234,.3); padding: .85rem 2rem;
+    border-radius: 50px; font-family: 'Outfit', sans-serif;
+    font-weight: 500; font-size: 1rem; cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+  .reveal {
+    opacity: 0; transform: translateY(26px);
+    transition: opacity .75s ease, transform .75s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip { background: linear-gradient(90deg, var(--maroon), var(--navy)); padding: .9rem 0; overflow: hidden; white-space: nowrap; }
+  .marquee-inner { display: inline-flex; animation: marquee 22s linear infinite; }
+  .marquee-item { display: inline-flex; align-items: center; gap: .6rem; padding: 0 2.5rem; font-size: .85rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: rgba(245,240,234,.8); }
+  .marquee-item::after { content: '⚡'; color: var(--light-green); }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1100px) {
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .impact-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 900px) {
+    .story { grid-template-columns: 1fr; gap: 3rem; }
+    .values-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .values-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .impact-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo"><img src="EVHub.png" alt="EVHub"/></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#how">How It Works</a></li>
+    <li><a href="index.html#locations">Locations</a></li>
+    <li><a href="about.html" class="active">About Us</a></li>
+  </ul>
+  <button class="nav-cta">Find a Station</button>
+</nav>
+
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="hero-eyebrow">Our Story</div>
+  <h1>
+    <span class="line1">Where Energy</span>
+    <span class="line2">Meets Heart</span>
+  </h1>
+  <p class="hero-desc">
+    EVHub was born from a simple but powerful belief: Africa should not be left behind in the global transition to clean and sustainable mobility. This vision of Africa's electric future is no more a distant dream — it is being built today, one charge at a time, by passionate people who see limitless potential in this continent.
+  </p>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-hint-line"></div>
+  </div>
+</div>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item">Our Story</span>
+    <span class="marquee-item">Built in Africa</span>
+    <span class="marquee-item">For Africa</span>
+    <span class="marquee-item">Ghana</span>
+    <span class="marquee-item">Nigeria</span>
+    <span class="marquee-item">Pan-African Vision</span>
+    <span class="marquee-item">Clean Energy</span>
+    <span class="marquee-item">Community First</span>
+    <span class="marquee-item">Our Story</span>
+    <span class="marquee-item">Built in Africa</span>
+    <span class="marquee-item">For Africa</span>
+    <span class="marquee-item">Ghana</span>
+    <span class="marquee-item">Nigeria</span>
+    <span class="marquee-item">Pan-African Vision</span>
+    <span class="marquee-item">Clean Energy</span>
+    <span class="marquee-item">Community First</span>
+  </div>
+</div>
+
+<!-- ── ORIGIN STORY ── -->
+<section class="story">
+  <div class="story-text reveal">
+    <div class="section-label">Our Origin</div>
+    <h2 class="section-title">From Accra to Lagos — and Beyond</h2>
+    <div class="story-body">
+      <p>
+        EVHub was founded in <strong>Accra, Ghana</strong>, by pan African entrepreneurs, and clean energy advocates who noticed a glaring gap: Africa was rapidly adopting electric vehicles, but <strong>charging infrastructure was nearly non-existent</strong>. Built on a longstanding commitment to innovation, infrastructure development, and inclusive growth. EVHub represents the convergence of purpose, technology, and execution.
+      </p>
+      <p>
+        Petrol stations had served Africa for over a century, but as Africa’s cities expand and transportation demand increases, the need for <strong>reliable, affordable, and built for local realities EV infrastructure</strong> — one that understood mobile money, load-shedding, and the spirit of community become critical. EVHub exists to enable this transition by developing and deploying dependable EV Charging solutions that support individuals, businesses, and institutions. Our approach prioritizes accessibility, operational reliability, and scalability; ensuring that clean transportation is practical, not hopeful.
+      </p>
+      <p>
+        We launched our first stations in Accra and Lagos, proving that world-class EV infrastructure was not just possible in Africa — it was <strong>inevitable</strong>. Today, our network is growing, and our ambition covers every one of the <strong>54 nations</strong> on this great continent.
+      </p>
+    </div>
+  </div>
+
+  <div class="story-visual reveal">
+    <div class="origin-card" style="position:relative;">
+      <div class="float-pill">⚡ Africa's EV Future Starts Now</div>
+      <div class="origin-card-header">
+        <div class="origin-country-flags">
+          <div class="flag-pill">🇬🇭 Ghana</div>
+          <div class="flag-pill">🇳🇬 Nigeria</div>
+        </div>
+        <div class="origin-title">Built Here.<br/><span>For Here.</span></div>
+      </div>
+      <div class="origin-card-body">
+        <div class="origin-stats">
+          <div class="o-stat"><div class="o-stat-val">2025</div><div class="o-stat-key">Year Founded</div></div>
+          <div class="o-stat"><div class="o-stat-val">2+</div><div class="o-stat-key">Countries Live</div></div>
+          <div class="o-stat"><div class="o-stat-val">54</div><div class="o-stat-key">Target Nations</div></div>
+          <div class="o-stat"><div class="o-stat-val">24/7</div><div class="o-stat-key">Support</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VALUES ── -->
+<section class="values">
+  <div class="values-intro reveal">
+    <div class="section-label">What Drives Us</div>
+    <h2 class="section-title">Our Core Values</h2>
+    <p class="section-sub">Everything we build, every station we install, every driver we serve — guided by six unshakeable principles.</p>
+  </div>
+  <div class="values-grid">
+    <div class="value-card c-green reveal">
+      <span class="value-icon">🌱</span>
+      <h3>Sustainability First</h3>
+      <p>Every decision we make prioritises the planet. From renewable-sourced power to minimal-waste hardware, green is in our DNA.</p>
+    </div>
+    <div class="value-card c-teal reveal">
+      <span class="value-icon">🤝</span>
+      <h3>Community at Heart</h3>
+      <p>We don't just build infrastructure — we build partnerships. Local jobs, local suppliers, and spaces that serve communities.</p>
+    </div>
+    <div class="value-card c-amber reveal">
+      <span class="value-icon">🔓</span>
+      <h3>Radical Accessibility</h3>
+      <p>Charging must be available to everyone. Our pricing, payment options, and locations are chosen with inclusivity in mind.</p>
+    </div>
+    <div class="value-card c-maroon reveal">
+      <span class="value-icon">⚡</span>
+      <h3>Relentless Innovation</h3>
+      <p>Africa's challenges are unique. We invent solutions that match — from solar-backed stations to offline-capable app modes.</p>
+    </div>
+    <div class="value-card c-navy reveal">
+      <span class="value-icon">🛡️</span>
+      <h3>Trust & Reliability</h3>
+      <p>Drivers depend on us. We maintain 99.5% station uptime, 24/7 monitoring, and on-ground response teams in every city.</p>
+    </div>
+    <div class="value-card c-lgreen reveal">
+      <span class="value-icon">🌍</span>
+      <h3>Pan-African Pride</h3>
+      <p>We are unapologetically African. Our ambition stretches to all 54 nations, and we celebrate every milestone as a continent.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── IMPACT NUMBERS ── -->
+<section class="impact">
+  <div class="impact-title-wrap reveal">
+    <div class="section-label">Our Impact</div>
+    <h2 class="section-title">Numbers That Tell Our Story</h2>
+  </div>
+  <div class="impact-grid">
+    <div class="impact-card i1 reveal">
+      <span class="impact-icon">🔌</span>
+      <div class="impact-num" data-target="120">0</div>
+      <div class="impact-label">Charging Stations Installed</div>
+    </div>
+    <div class="impact-card i2 reveal">
+      <span class="impact-icon">🚗</span>
+      <div class="impact-num" data-target="8500">0</div>
+      <div class="impact-label">Vehicles Charged Monthly</div>
+    </div>
+    <div class="impact-card i3 reveal">
+      <span class="impact-icon">♻️</span>
+      <div class="impact-num" data-target="340">0</div>
+      <div class="impact-label">Tonnes CO₂ Avoided</div>
+    </div>
+    <div class="impact-card i4 reveal">
+      <span class="impact-icon">👥</span>
+      <div class="impact-num" data-target="200">0</div>
+      <div class="impact-label">Jobs Created Across Africa</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TIMELINE ── -->
+<section class="timeline-section">
+  <div class="timeline-intro reveal">
+    <div class="section-label">Our Journey</div>
+    <h2 class="section-title">Milestones That Define Us</h2>
+    <p class="section-sub">From a bold idea in a Accra co-working space to a growing pan-African network — here's how we got here.</p>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2025 — Q1</div>
+      <div class="tl-card">
+        <h3>The Spark: EVHub is Founded</h3>
+        <p>An EV enthusiasts, and clean-energy advocates — incorporate EVHub in Accra, Ghana, with a mission to electrify Africa's mobility future.</p>
+        <span class="tl-tag">Founding</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2025 — Q3</div>
+      <div class="tl-card">
+        <h3>Established Partnership with a leading player in Petroleum Industry in Africa</h3>
+        <p>EVHub understand that building the nation’s green future doesn't happen overnight. It takes the patience to build lasting infrastructure, the goodwill to keep it affordable, and the faithfulness to ensure no community is left behind.</p>
+        <span class="tl-tag amber">Milestone</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2025 — Q4</div>
+      <div class="tl-card">
+        <h3>Seed Funding & Expansion to Nigeria</h3>
+        <p>EVHub closes a deal seed round led by pan-African climate investors. The Nigeira Lagos expansion kicksart, marking our cross-border expansion and the beginning of a West African network.</p>
+        <span class="tl-tag teal">Funding</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2026 — Q1</div>
+      <div class="tl-card">
+        <h3>EVHub App Launches on Online</h3>
+        <p>Our Website and mobile app — supporting real-time station tracking, mobile money payments, and session management — hits the App Store and Google Play. 5,000 downloads in the first week.</p>
+        <span class="tl-tag">Product</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2026 — Q2</div>
+      <div class="tl-card">
+        <h3>20-Station Network Milestone</h3>
+        <p>EVHub crosses 20 active charging points across Ghana and Nigeria, and announces the Partner Program — enabling businesses to host EVHub chargers and earn revenue.</p>
+        <span class="tl-tag amber">Milestone</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2026 — Now</div>
+      <div class="tl-card">
+        <h3>Series A & Pan-African Roadmap</h3>
+        <p>EVHub raises its Series A to accelerate expansion into Senegal, Kenya, and South Africa. Our vision: a charging station reachable by every African EV driver within 50km by 2030.</p>
+        <span class="tl-tag teal">Funding</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TEAM ── -->
+<section class="team">
+  <div class="team-intro reveal">
+    <div class="section-label">The People</div>
+    <h2 class="section-title">Meet the Team Behind EVHub</h2>
+    <p class="section-sub">We are engineers, dreamers, operators, and Africans — united by a conviction that the continent's electric future belongs to us.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-avatar bg1">
+        <div class="avatar-ring"></div>
+        <span class="team-avatar-initials">McWALY</span>
+      </div>
+      <div class="team-info">
+        <h3>Malik Olawale (McWaly)</h3>
+        <div class="role">CEO & Managing Director</div>
+        <div class="bio">Pan African Creative Entrepreneur committed to build Africa's EV backbone. Leads strategy and expansion.</div>
+        <div class="team-socials">
+          <div class="t-social">in</div>
+          <div class="t-social">𝕏</div>
+        </div>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar bg2">
+        <div class="avatar-ring"></div>
+        <span class="team-avatar-initials">SB</span>
+      </div>
+      <div class="team-info">
+        <h3>Stanley Brown</h3>
+        <div class="role">Chief Technology Officer</div>
+        <div class="bio">IT Engineer and Software Architect from Accra. Built the EVHub IoT platform and app from the ground up.</div>
+        <div class="team-socials">
+          <div class="t-social">in</div>
+          <div class="t-social">𝕏</div>
+        </div>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar bg3">
+        <div class="avatar-ring"></div>
+        <span class="team-avatar-initials">NKT</span>
+      </div>
+      <div class="team-info">
+        <h3>Nii Kommey Tetteh</h3>
+        <div class="role">Chief Operations Officer</div>
+        <div class="bio">Business Development and operations specialist. Responsible for station installation, maintenance, and 24/7 field operations across all markets.</div>
+        <div class="team-socials">
+          <div class="t-social">in</div>
+          <div class="t-social">𝕏</div>
+        </div>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar bg4">
+        <div class="avatar-ring"></div>
+        <span class="team-avatar-initials">GM</span>
+      </div>
+      <div class="team-info">
+        <h3>Gloria Mensah</h3>
+        <div class="role">Chief Growth Officer</div>
+        <div class="bio">Market strategist driving EVHub's continental growth plan.</div>
+        <div class="team-socials">
+          <div class="t-social">in</div>
+          <div class="t-social">𝕏</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PARTNERS ── -->
+<section class="partners">
+  <div class="partners-intro reveal">
+    <div class="section-label">Our Partners</div>
+    <h2 class="section-title">Backed by Africa's Best</h2>
+    <p class="section-sub">We work with investors, governments, and organisations who believe in a clean, connected Africa.</p>
+  </div>
+  <div class="partners-logos reveal">
+    <div class="partner-pill"><span class="partner-icon">🏦</span> Pan-African Climate Fund</div>
+    <div class="partner-pill"><span class="partner-icon">⚡</span> ECOWAS Clean Energy Initiative</div>
+    <div class="partner-pill"><span class="partner-icon">🌍</span> Africa Development Bank</div>
+    <div class="partner-pill"><span class="partner-icon">📱</span> MTN Mobile Money</div>
+    <div class="partner-pill"><span class="partner-icon">🏢</span> Ghana Energy Commission</div>
+    <div class="partner-pill"><span class="partner-icon">🔋</span> NNPC Green Ventures</div>
+    <div class="partner-pill"><span class="partner-icon">🛣️</span> GhanaRoads Authority</div>
+    <div class="partner-pill"><span class="partner-icon">🌱</span> Africa Climate Ventures</div>
+  </div>
+</section>
+
+<!-- ── JOIN US CTA ── -->
+<section class="join-cta">
+  <div class="join-cta-inner reveal">
+    <div class="section-label" style="text-align:center;">Join the Movement</div>
+    <h2>Be Part of <span>Africa's</span><br/>Electric Revolution</h2>
+    <p>Whether you're a driver, a business owner, an investor, or an engineer — there's a place for you in the EVHub story. Let's build this continent's electric future together.</p>
+    <div class="join-buttons">
+      <button class="btn-primary">⚡ Find a Charging Station</button>
+       <a href="partner.html">
+      <button class="btn-outline">Partner With Us →</button>
+     </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="EVHub.png" alt="EVHub"/>
+      <p>Where Energy Meets Heart. Africa's leading EV charging network, powering a cleaner continent one charge at a time.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="#">Our Mission</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Network</h4>
+      <ul>
+        <li><a href="#">Find Stations</a></li>
+        <li><a href="#">Ghana</a></li>
+        <li><a href="#">Nigeria</a></li>
+        <li><a href="#">Coming Soon</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Centre</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="partner.html">Partner With Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 EVHub. Where Energy Meets Heart.</p>
+    <div class="social-links">
+      <div class="social-link">𝕏</div>
+      <div class="social-link">in</div>
+      <div class="social-link">f</div>
+      <div class="social-link">📸</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Reveal on scroll ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 90);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal, .tl-item').forEach(el => observer.observe(el));
+
+  /* ── Animated counters ── */
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = +el.dataset.target;
+      const suffix = target >= 1000 ? '+' : target === 340 ? 't' : '+';
+      const duration = 1800;
+      const step = Math.ceil(target / (duration / 16));
+      let current = 0;
+      const ticker = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = current >= 1000
+          ? (current / 1000).toFixed(1).replace(/\.0$/, '') + 'K+'
+          : current + (target < 1000 && target !== 24 ? '+' : '');
+        if (current >= target) {
+          el.textContent = target >= 1000
+            ? (target / 1000).toFixed(1).replace(/\.0$/, '') + 'K+'
+            : target + '+';
+          clearInterval(ticker);
+        }
+      }, 16);
+      counterObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+</script>
+</body>
+</html>

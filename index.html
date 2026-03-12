@@ -1,0 +1,443 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EVHub — Where Energy Meets Heart</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy:    #1a3a5c;
+    --maroon:  #7b1f2e;
+    --teal:    #5b8fa8;
+    --amber:   #c97d2a;
+    --green:   #3daa4e;
+    --light-green: #5ecf72;
+    --cream:   #f5f0ea;
+    --dark:    #0d1f30;
+    --mid:     #152840;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--dark); color: var(--cream); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 5%;
+    background: rgba(13,31,48,.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(91,143,168,.18);
+  }
+  .nav-logo img { height: 52px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--cream); text-decoration: none; font-size: .9rem; font-weight: 500; letter-spacing: .04em; transition: color .25s; }
+  .nav-links a:hover { color: var(--light-green); }
+  .nav-cta { background: var(--green); color: #fff; border: none; padding: .6rem 1.5rem; border-radius: 50px; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: .9rem; cursor: pointer; transition: background .25s, transform .2s; }
+  .nav-cta:hover { background: var(--light-green); transform: translateY(-1px); }
+
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 7rem 5% 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 60% 40%, rgba(91,143,168,.18) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 50% at 85% 70%, rgba(201,125,42,.14) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(123,31,46,.18) 0%, transparent 55%);
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(61,170,78,.12); border: 1px solid rgba(61,170,78,.35);
+    border-radius: 50px; padding: .35rem 1rem;
+    font-size: .78rem; font-weight: 600; letter-spacing: .1em;
+    color: var(--light-green); text-transform: uppercase; margin-bottom: 1.5rem;
+    animation: fadeUp .8s ease both;
+  }
+  .hero-badge span { width: 7px; height: 7px; border-radius: 50%; background: var(--light-green); animation: blink 1.4s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+  .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 7vw, 6.5rem); line-height: .95; letter-spacing: .02em; animation: fadeUp .8s .15s ease both; }
+  .hero h1 .ev  { color: var(--teal); }
+  .hero h1 .hub { color: #9b2a3d; }
+  .hero h1 .africa { display: block; background: linear-gradient(90deg, var(--amber), var(--light-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  .hero-sub { margin: 1.4rem 0 2.4rem; font-size: 1.05rem; font-weight: 300; line-height: 1.7; color: rgba(245,240,234,.68); max-width: 480px; animation: fadeUp .8s .3s ease both; }
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp .8s .45s ease both; }
+  .btn-primary { background: linear-gradient(135deg, var(--green), #2d8a3e); color: #fff; border: none; padding: .85rem 2rem; border-radius: 50px; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; box-shadow: 0 6px 28px rgba(61,170,78,.35); transition: transform .2s, box-shadow .2s; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(61,170,78,.45); }
+  .btn-outline { background: transparent; color: var(--cream); border: 1.5px solid rgba(245,240,234,.3); padding: .85rem 2rem; border-radius: 50px; font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 1rem; cursor: pointer; transition: border-color .2s, color .2s; }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+  .hero-stats { display: flex; gap: 2.5rem; margin-top: 3.5rem; animation: fadeUp .8s .6s ease both; }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--amber); line-height: 1; }
+  .stat-label { font-size: .78rem; color: rgba(245,240,234,.5); letter-spacing: .06em; text-transform: uppercase; margin-top: .2rem; }
+
+  .hero-text { position: relative; z-index: 2; }
+  .hero-visual { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; animation: fadeUp .8s .2s ease both; }
+
+  .charge-card {
+    width: 340px; background: rgba(255,255,255,.04);
+    border: 1px solid rgba(91,143,168,.25); border-radius: 24px;
+    padding: 2rem; backdrop-filter: blur(16px);
+    box-shadow: 0 24px 64px rgba(0,0,0,.4); position: relative; overflow: hidden;
+  }
+  .charge-card::before {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: conic-gradient(from 0deg at 50% 50%, transparent 60%, rgba(61,170,78,.06) 75%, transparent 90%);
+    animation: rotateGlow 8s linear infinite;
+  }
+  @keyframes rotateGlow { to { transform: rotate(360deg); } }
+  .charge-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .charge-header span { font-size: .8rem; color: rgba(245,240,234,.4); letter-spacing: .08em; text-transform: uppercase; }
+  .live-badge { background: rgba(61,170,78,.15); border: 1px solid rgba(61,170,78,.4); color: var(--light-green); border-radius: 50px; padding: .2rem .7rem; font-size: .72rem; font-weight: 600; display: flex; align-items: center; gap: .3rem; }
+  .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--light-green); animation: blink 1.4s infinite; }
+  .charge-display { text-align: center; padding: 1.2rem 0; }
+  .charge-pct { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: var(--light-green); line-height: 1; letter-spacing: .05em; text-shadow: 0 0 30px rgba(94,207,114,.4); }
+  .charge-label { font-size: .82rem; color: rgba(245,240,234,.45); margin-top: -.2rem; }
+  .charge-bar-bg { background: rgba(255,255,255,.08); border-radius: 8px; height: 10px; overflow: hidden; margin: 1.2rem 0; }
+  .charge-bar-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--teal), var(--light-green)); box-shadow: 0 0 14px rgba(61,170,78,.5); animation: chargeUp 3s ease forwards; }
+  @keyframes chargeUp { from { width: 0 } to { width: 72%; } }
+  .charge-meta { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .8rem; margin-top: 1.4rem; }
+  .meta-item { text-align: center; }
+  .meta-val { font-weight: 700; font-size: 1rem; color: var(--cream); }
+  .meta-key { font-size: .7rem; color: rgba(245,240,234,.4); text-transform: uppercase; margin-top: .15rem; }
+  .charge-connector { margin-top: 1.4rem; background: rgba(201,125,42,.08); border: 1px solid rgba(201,125,42,.2); border-radius: 12px; padding: .85rem 1rem; display: flex; align-items: center; justify-content: space-between; }
+  .conn-left { display: flex; align-items: center; gap: .6rem; }
+  .conn-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--teal), var(--navy)); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .conn-name { font-size: .85rem; font-weight: 600; }
+  .conn-sub  { font-size: .72rem; color: rgba(245,240,234,.4); }
+  .conn-power { font-size: .9rem; font-weight: 700; color: var(--amber); }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+
+  .marquee-strip { background: linear-gradient(90deg, var(--maroon), var(--navy)); padding: .9rem 0; overflow: hidden; white-space: nowrap; }
+  .marquee-inner { display: inline-flex; animation: marquee 22s linear infinite; }
+  .marquee-item { display: inline-flex; align-items: center; gap: .6rem; padding: 0 2.5rem; font-size: .85rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: rgba(245,240,234,.8); }
+  .marquee-item::after { content: '⚡'; color: var(--light-green); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  section { padding: 6rem 5%; }
+  .section-label { display: inline-block; font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--light-green); margin-bottom: .8rem; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: 1.05; letter-spacing: .02em; color: var(--cream); margin-bottom: 1rem; }
+  .section-sub { font-size: 1rem; color: rgba(245,240,234,.55); line-height: 1.7; max-width: 540px; }
+
+  .how { background: var(--mid); }
+  .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1.5rem; margin-top: 3.5rem; }
+  .how-step { background: rgba(255,255,255,.03); border: 1px solid rgba(91,143,168,.15); border-radius: 20px; padding: 2rem 1.6rem; position: relative; overflow: hidden; transition: transform .3s, border-color .3s; }
+  .how-step:hover { transform: translateY(-6px); border-color: rgba(91,143,168,.4); }
+  .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: rgba(91,143,168,.1); position: absolute; top: .8rem; right: 1rem; line-height: 1; pointer-events: none; }
+  .step-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.2rem; }
+  .step-icon.blue   { background: rgba(91,143,168,.15); }
+  .step-icon.green  { background: rgba(61,170,78,.12); }
+  .step-icon.amber  { background: rgba(201,125,42,.12); }
+  .step-icon.maroon { background: rgba(123,31,46,.15); }
+  .how-step h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; }
+  .how-step p  { font-size: .875rem; color: rgba(245,240,234,.5); line-height: 1.65; }
+
+  .locations-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 3rem; }
+  .map-visual { background: rgba(255,255,255,.02); border: 1px solid rgba(91,143,168,.15); border-radius: 24px; padding: 2rem; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .map-visual svg { width: 90%; height: 90%; }
+  .location-list { display: flex; flex-direction: column; gap: 1.2rem; }
+  .loc-card { display: flex; align-items: center; gap: 1.2rem; background: rgba(255,255,255,.03); border: 1px solid rgba(91,143,168,.15); border-radius: 16px; padding: 1.2rem 1.4rem; transition: border-color .25s, transform .25s; }
+  .loc-card:hover { border-color: rgba(61,170,78,.35); transform: translateX(6px); }
+  .loc-flag { font-size: 2rem; }
+  .loc-info h4 { font-size: 1rem; font-weight: 700; }
+  .loc-info p  { font-size: .8rem; color: rgba(245,240,234,.45); margin-top: .15rem; }
+  .loc-badge { margin-left: auto; background: rgba(61,170,78,.12); border: 1px solid rgba(61,170,78,.3); color: var(--light-green); border-radius: 50px; padding: .25rem .8rem; font-size: .7rem; font-weight: 700; white-space: nowrap; }
+  .loc-badge.soon { background: rgba(201,125,42,.1); border-color: rgba(201,125,42,.3); color: var(--amber); }
+
+  .features { background: var(--dark); }
+  .features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+  .feat-card { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: 20px; padding: 2rem 1.8rem; transition: background .3s, border-color .3s, transform .3s; }
+  .feat-card:hover { background: rgba(91,143,168,.07); border-color: rgba(91,143,168,.3); transform: translateY(-4px); }
+  .feat-icon { font-size: 2rem; margin-bottom: 1.1rem; display: block; }
+  .feat-card h3 { font-size: .98rem; font-weight: 700; margin-bottom: .5rem; }
+  .feat-card p  { font-size: .85rem; color: rgba(245,240,234,.48); line-height: 1.65; }
+  .feat-card.highlight { background: linear-gradient(135deg, rgba(61,170,78,.12), rgba(26,58,92,.15)); border-color: rgba(61,170,78,.25); }
+
+  .cta-banner { background: linear-gradient(135deg, var(--navy) 0%, #0f2438 40%, rgba(123,31,46,.4) 100%); border-radius: 28px; margin: 0 5%; padding: 4rem; position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem; border: 1px solid rgba(91,143,168,.2); }
+  .cta-banner::before { content: ''; position: absolute; right: -80px; top: -80px; width: 360px; height: 360px; border-radius: 50%; background: radial-gradient(circle, rgba(61,170,78,.12), transparent 65%); pointer-events: none; }
+  .cta-banner h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.05; letter-spacing: .02em; }
+  .cta-banner h2 span { color: var(--light-green); }
+  .cta-banner p { color: rgba(245,240,234,.55); margin-top: .6rem; max-width: 420px; font-size: .95rem; }
+  .cta-actions { display: flex; flex-direction: column; gap: .8rem; }
+
+  .app-section { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; background: var(--mid); }
+  .app-mockup { display: flex; justify-content: center; }
+  .phone-frame { width: 220px; background: rgba(255,255,255,.04); border: 1px solid rgba(91,143,168,.25); border-radius: 36px; padding: 1.5rem 1rem; box-shadow: 0 32px 80px rgba(0,0,0,.4); animation: float 4s ease-in-out infinite alternate; }
+  @keyframes float { 0% { transform: translateY(0) rotate(-2deg); } 100% { transform: translateY(-14px) rotate(1deg); } }
+  .phone-notch { width: 80px; height: 12px; background: var(--dark); border-radius: 10px; margin: 0 auto 1.2rem; }
+  .phone-screen { text-align: center; }
+  .phone-screen .charge-big { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: var(--light-green); text-shadow: 0 0 20px rgba(94,207,114,.4); }
+  .phone-screen .charge-status { font-size: .72rem; color: rgba(245,240,234,.4); letter-spacing: .1em; text-transform: uppercase; }
+  .phone-bar-bg { height: 8px; background: rgba(255,255,255,.06); border-radius: 4px; margin: .8rem 0; overflow: hidden; }
+  .phone-bar-fill { height: 100%; width: 65%; background: linear-gradient(90deg, var(--teal), var(--light-green)); border-radius: 4px; }
+  .phone-row { display: flex; justify-content: space-between; margin-top: .7rem; font-size: .75rem; }
+  .phone-row span:first-child { color: rgba(245,240,234,.4); }
+  .phone-row span:last-child  { color: var(--amber); font-weight: 600; }
+  .store-btns { display: flex; flex-direction: column; gap: .8rem; margin-top: 2rem; }
+  .store-btn { display: flex; align-items: center; gap: .8rem; background: rgba(255,255,255,.05); border: 1px solid rgba(91,143,168,.2); border-radius: 14px; padding: .8rem 1.2rem; cursor: pointer; transition: background .25s, border-color .25s; }
+  .store-btn:hover { background: rgba(91,143,168,.1); border-color: rgba(91,143,168,.4); }
+  .store-icon { font-size: 1.6rem; }
+  .store-sub { font-size: .65rem; color: rgba(245,240,234,.4); letter-spacing: .06em; text-transform: uppercase; }
+  .store-name { font-size: .9rem; font-weight: 700; color: var(--cream); }
+
+  footer { background: #080f17; padding: 4rem 5% 2.5rem; border-top: 1px solid rgba(91,143,168,.1); }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand img { height: 48px; margin-bottom: 1rem; }
+  .footer-brand p { font-size: .85rem; color: rgba(245,240,234,.4); line-height: 1.7; max-width: 240px; }
+  .footer-col h4 { font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(245,240,234,.55); margin-bottom: 1rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: .6rem; }
+  .footer-col ul a { font-size: .875rem; color: rgba(245,240,234,.4); text-decoration: none; transition: color .2s; }
+  .footer-col ul a:hover { color: var(--light-green); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,.05); }
+  .footer-bottom p { font-size: .78rem; color: rgba(245,240,234,.3); }
+  .social-links { display: flex; gap: 1rem; }
+  .social-link { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid rgba(91,143,168,.15); display: flex; align-items: center; justify-content: center; font-size: .9rem; cursor: pointer; transition: background .25s, border-color .25s; }
+  .social-link:hover { background: rgba(91,143,168,.15); border-color: rgba(91,143,168,.4); }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; text-align: center; }
+    .hero-sub { margin: 1.4rem auto 2.4rem; }
+    .hero-buttons { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .hero-visual { margin-top: 3rem; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .locations-wrap { grid-template-columns: 1fr; }
+    .app-section { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .cta-banner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 580px) {
+    .nav-links { display: none; }
+    .features-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><img src="EVHub.png" style="background-color: transparent;" alt="EVHub Logo"/></div>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#locations">Locations</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#app">App</a></li>
+  </ul>
+  <button class="nav-cta">Find a Station</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge"><span></span> Now Live in West Africa</div>
+    <h1>
+      <span class="ev">EV</span><span class="hub">HUB</span>
+      <span class="africa">Powers Africa</span>
+    </h1>
+    <p class="hero-sub">The smart, connected EV charging network built for Africa's future. Charge faster, drive farther, and be part of the green revolution sweeping the continent.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary">⚡ Find a Charger</button>
+      <button class="btn-outline">Learn More →</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-val">2</div><div class="stat-label">Countries Active</div></div>
+      <div><div class="stat-val">54</div><div class="stat-label">Target Nations</div></div>
+      <div><div class="stat-val">24/7</div><div class="stat-label">Availability</div></div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="charge-card">
+      <div class="charge-header">
+        <span>Current Session</span>
+        <div class="live-badge"><span class="live-dot"></span> Live</div>
+      </div>
+      <div class="charge-display">
+        <div class="charge-pct" id="pct">0%</div>
+        <div class="charge-label">Battery Level</div>
+      </div>
+      <div class="charge-bar-bg"><div class="charge-bar-fill"></div></div>
+      <div class="charge-meta">
+        <div class="meta-item"><div class="meta-val">45 kW</div><div class="meta-key">Power</div></div>
+        <div class="meta-item"><div class="meta-val">08 min</div><div class="meta-key">Remaining</div></div>
+        <div class="meta-item"><div class="meta-val">₵12.50</div><div class="meta-key">Cost</div></div>
+      </div>
+      <div class="charge-connector">
+        <div class="conn-left">
+          <div class="conn-icon">🔌</div>
+          <div>
+            <div class="conn-name">EVHub Station</div>
+            <div class="conn-sub">Accra Central Hub</div>
+          </div>
+        </div>
+        <div class="conn-power">DC Fast</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item">DC Fast Charging</span>
+    <span class="marquee-item">Ghana</span>
+    <span class="marquee-item">Nigeria</span>
+    <span class="marquee-item">Smart Payments</span>
+    <span class="marquee-item">Mobile App</span>
+    <span class="marquee-item">Real-Time Monitoring</span>
+    <span class="marquee-item">Clean Energy</span>
+    <span class="marquee-item">Pan-African Vision</span>
+    <span class="marquee-item">DC Fast Charging</span>
+    <span class="marquee-item">Ghana</span>
+    <span class="marquee-item">Nigeria</span>
+    <span class="marquee-item">Smart Payments</span>
+    <span class="marquee-item">Mobile App</span>
+    <span class="marquee-item">Real-Time Monitoring</span>
+    <span class="marquee-item">Clean Energy</span>
+    <span class="marquee-item">Pan-African Vision</span>
+  </div>
+</div>
+
+<section class="how" id="how">
+  <div class="reveal">
+    <div class="section-label">Simple Process</div>
+    <h2 class="section-title">Charging in 4 Easy Steps</h2>
+    <p class="section-sub">Getting your EV charged with EVHub is seamless, fast, and designed around your lifestyle.</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-step reveal"><div class="step-num">01</div><div class="step-icon blue">📍</div><h3>Find a Station</h3><p>Locate the nearest EVHub charging station instantly through our app or website, with live availability updates.</p></div>
+    <div class="how-step reveal"><div class="step-num">02</div><div class="step-icon green">📱</div><h3>Scan & Connect</h3><p>Scan the QR code at the station or tap your EVHub card to start the session instantly — no fuss, no waiting.</p></div>
+    <div class="how-step reveal"><div class="step-num">03</div><div class="step-icon amber">⚡</div><h3>Charge Up</h3><p>Power up with our high-speed DC and AC chargers. Monitor your session live on the app while you relax.</p></div>
+    <div class="how-step reveal"><div class="step-num">04</div><div class="step-icon maroon">💳</div><h3>Pay Seamlessly</h3><p>Pay securely via mobile money, card, or your EVHub wallet. Get your receipt and hit the road fully charged.</p></div>
+  </div>
+</section>
+
+<section id="locations" style="background:var(--dark);">
+  <div class="locations-wrap">
+    <div class="reveal">
+      <div class="section-label">Our Network</div>
+      <h2 class="section-title">Rooted in West Africa, Expanding Everywhere</h2>
+      <p class="section-sub">We began our journey in Ghana and Nigeria — two of Africa's most dynamic economies — and are building towards a continent-wide network.</p>
+      <div class="location-list" style="margin-top:2rem;">
+        <div class="loc-card"><div class="loc-flag">🇬🇭</div><div class="loc-info"><h4>Ghana</h4><p>Accra · Kumasi · Tema — Multiple stations active</p></div><div class="loc-badge">Active</div></div>
+        <div class="loc-card"><div class="loc-flag">🇳🇬</div><div class="loc-info"><h4>Nigeria</h4><p>Lagos · Abuja · Port Harcourt — Stations live</p></div><div class="loc-badge">Active</div></div>
+        <div class="loc-card"><div class="loc-flag">🇸🇳</div><div class="loc-info"><h4>Senegal</h4><p>Dakar — Coming Q3 2025</p></div><div class="loc-badge soon">Coming Soon</div></div>
+        <div class="loc-card"><div class="loc-flag">🌍</div><div class="loc-info"><h4>Rest of Africa</h4><p>Kenya · South Africa · Egypt & 49 more nations</p></div><div class="loc-badge soon">Roadmap</div></div>
+      </div>
+    </div>
+    <div class="map-visual reveal">
+      <svg viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M180 30 C150 32 115 50 95 80 C75 110 68 150 60 185 C50 225 35 255 38 290 C42 320 60 340 75 368 C90 396 108 420 130 438 C152 456 180 465 200 458 C220 451 235 435 248 415 C264 392 278 372 290 348 C304 320 312 290 308 262 C304 234 288 210 292 185 C296 160 314 140 316 115 C318 88 306 58 285 40 C268 24 200 28 180 30Z" fill="rgba(91,143,168,0.12)" stroke="rgba(91,143,168,0.3)" stroke-width="1.5"/>
+        <circle cx="148" cy="270" r="8" fill="#5ecf72" opacity=".9"/>
+        <circle cx="148" cy="270" r="16" fill="none" stroke="#5ecf72" stroke-width="2" opacity=".4"><animate attributeName="r" from="8" to="26" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" from=".6" to="0" dur="2s" repeatCount="indefinite"/></circle>
+        <circle cx="185" cy="252" r="8" fill="#c97d2a" opacity=".9"/>
+        <circle cx="185" cy="252" r="16" fill="none" stroke="#c97d2a" stroke-width="2" opacity=".4"><animate attributeName="r" from="8" to="26" dur="2s" begin=".7s" repeatCount="indefinite"/><animate attributeName="opacity" from=".6" to="0" dur="2s" begin=".7s" repeatCount="indefinite"/></circle>
+        <text x="110" y="295" fill="rgba(245,240,234,0.6)" font-size="12" font-family="Outfit,sans-serif" font-weight="600">Ghana</text>
+        <text x="192" y="272" fill="rgba(245,240,234,0.6)" font-size="12" font-family="Outfit,sans-serif" font-weight="600">Nigeria</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div style="text-align:center;" class="reveal">
+    <div class="section-label">Why EVHub</div>
+    <h2 class="section-title">Built for African Roads & Drivers</h2>
+    <p class="section-sub" style="margin:0 auto;">Every feature designed with the realities and ambitions of Africa's EV journey in mind.</p>
+  </div>
+  <div class="features-grid" style="margin-top:3rem;">
+    <div class="feat-card highlight reveal"><span class="feat-icon">⚡</span><h3>Ultra-Fast DC Charging</h3><p>Up to 150 kW DC fast charging for rapid top-ups. Get 80% battery in under 30 minutes at our premium stations.</p></div>
+    <div class="feat-card reveal"><span class="feat-icon">📡</span><h3>Real-Time Station Data</h3><p>Live availability, wait times, and queue status for every station across the network — always up to date.</p></div>
+    <div class="feat-card reveal"><span class="feat-icon">💰</span><h3>Mobile Money & Card</h3><p>Pay via MTN MoMo, Airtel Money, bank cards, or the EVHub wallet. Payment built for Africa.</p></div>
+    <div class="feat-card reveal"><span class="feat-icon">🌱</span><h3>100% Clean Energy</h3><p>Our stations prioritise renewable energy sources, contributing directly to Africa's clean-air future.</p></div>
+    <div class="feat-card reveal"><span class="feat-icon">🛡️</span><h3>Safe & Certified</h3><p>IEC-certified hardware, 24/7 monitoring, and on-ground support teams ensure a safe experience every time.</p></div>
+    <div class="feat-card reveal"><span class="feat-icon">🤝</span><h3>Partner Program</h3><p>Install EVHub chargers at your business. Attract customers and earn revenue. We handle everything technical.</p></div>
+  </div>
+</section>
+
+<div class="cta-banner reveal">
+  <div>
+    <h2>Ready to <span>Charge</span><br/>Your Journey?</h2>
+    <p>Join thousands of EV drivers across Ghana and Nigeria already on the EVHub network. Your ride, your future.</p>
+  </div>
+  <div class="cta-actions">
+    <button class="btn-primary">⚡ Find Nearest Station</button>
+    <a href="partner.html">
+    <button class="btn-outline">Become a Partner →</button>
+  </a>
+  </div>
+</div>
+
+<section class="app-section" id="app">
+  <div class="app-mockup reveal">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <img src="EVHub.png" alt="EVHub" style="width:70px; margin-bottom:.8rem;"/>
+        <div class="charge-big">65%</div>
+        <div class="charge-status">Charging Active</div>
+        <div class="phone-bar-bg"><div class="phone-bar-fill"></div></div>
+        <div class="phone-row"><span>Time left</span><span>08 min</span></div>
+        <div class="phone-row"><span>Power</span><span>45 kW</span></div>
+        <div class="phone-row"><span>Cost so far</span><span>₵19.20</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="section-label">EVHub App</div>
+    <h2 class="section-title">Your EV Partner in Your Pocket</h2>
+    <p class="section-sub">Find stations, start sessions, track charging progress, and manage payments — all from the EVHub app.</p>
+    <div class="store-btns">
+      <button class="store-btn"><span class="store-icon">🍎</span><div><div class="store-sub">Download on the</div><div class="store-name">App Store</div></div></button>
+      <button class="store-btn"><span class="store-icon">🤖</span><div><div class="store-sub">Get it on</div><div class="store-name">Google Play</div></div></button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="EVHub.png" style="background-color: transparent;" alt="EVHub"/>
+      <p>Where Energy Meets Heart. Africa's leading EV charging network, powering a cleaner continent one charge at a time.</p>
+    </div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="#">Our Mission</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li></ul></div>
+    <div class="footer-col"><h4>Network</h4><ul><li><a href="#">Find Stations</a></li><li><a href="#">Ghana</a></li><li><a href="#">Nigeria</a></li><li><a href="#">Coming Soon</a></li></ul></div>
+    <div class="footer-col"><h4>Support</h4><ul><li><a href="#">Help Centre</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="partner.html">Partner With Us</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 EVHub. Where Energy Meets Heart.</p>
+    <div class="social-links">
+      <div class="social-link">𝕏</div>
+      <div class="social-link">in</div>
+      <div class="social-link">f</div>
+      <div class="social-link">📸</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  let pct = 0;
+  const pctEl = document.getElementById('pct');
+  const inc = setInterval(() => {
+    pct++;
+    if (pct > 72) { clearInterval(inc); return; }
+    pctEl.textContent = pct + '%';
+  }, 28);
+</script>
+</body>
+</html>
